@@ -20,13 +20,13 @@ const App = () => {
 
       {showPicker && (
         <IconPicker
-          rowsInOnePage={2}
-          columnsInOnePage={2}
+          rowsInOnePage={3}
+          columnsInOnePage={4}
           iconHeight={100}
           iconWidth={100}
           onSelect={handleIconSelect}
-          pickerHeight={600}
-          pickerWidth={600}
+          pickerHeight={500}
+          pickerWidth={500}
         />
       )}
     </div>
