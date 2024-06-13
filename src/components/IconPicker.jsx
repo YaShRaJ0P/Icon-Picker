@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { icons } from "feather-icons";
-import { X } from "feather-icons-react";
 import FeatherIcon from "feather-icons-react";
 
 const IconPicker = ({
