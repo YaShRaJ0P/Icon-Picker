@@ -1,35 +1,5 @@
 import React, { useState } from "react";
-import {
-  FaReact,
-  FaNodeJs,
-  FaAngular,
-  FaVuejs,
-  FaAmazonPay,
-  FaAddressBook,
-  FaAndroid,
-} from "react-icons/fa";
-
-const icons = [
-  FaReact,
-  FaNodeJs,
-  FaAngular,
-  FaVuejs,
-  FaAmazonPay,
-  FaAddressBook,
-  FaAndroid,
-  FaAmazonPay,
-  FaAddressBook,
-  FaAndroid,
-  FaAmazonPay,
-  FaAddressBook,
-  FaAndroid,
-  FaAmazonPay,
-  FaAddressBook,
-  FaAndroid,
-  FaAmazonPay,
-  FaAddressBook,
-  FaAndroid,
-];
+import { icons } from "feather-icons";
 
 const IconPicker = ({
   rowsInOnePage,
@@ -42,21 +12,23 @@ const IconPicker = ({
 }) => {
   const [currentPage, setCurrentPage] = useState(0);
 
+  const iconComponents = Object.keys(icons).map((key) => ({
+    name: key,
+    svg: icons[key].toSvg({ width: iconWidth, height: iconHeight }),
+  }));
+
   const iconsPerPage = rowsInOnePage * columnsInOnePage;
-  const paginatedIcons = icons.slice(
+  const paginatedIcons = iconComponents.slice(
     currentPage * iconsPerPage,
     (currentPage + 1) * iconsPerPage
   );
 
-  const handleIconClick = (Icon) => {
-    onSelect(Icon);
+  const handleIconClick = (icon) => {
+    onSelect(icon);
   };
 
   return (
-    <div
-      className="fixed top-0 left-0 w-screen h-screen bg-gray-900 bg-opacity-50 flex items-center justify-center"
-      onClick={(e) => e.stopPropagation()}
-    >
+    <div className="fixed top-0 left-0 w-screen h-screen bg-gray-900 bg-opacity-50 flex items-center justify-center">
       <div
         className="bg-white p-4"
         style={{ height: pickerHeight, width: pickerWidth }}
@@ -68,14 +40,17 @@ const IconPicker = ({
             gridTemplateColumns: `repeat(${columnsInOnePage}, ${iconWidth}px)`,
           }}
         >
-          {paginatedIcons.map((Icon, index) => (
+          {paginatedIcons.map((icon, index) => (
             <div
               key={index}
               className="flex items-center justify-center cursor-pointer border p-1"
-              onClick={() => handleIconClick(Icon)}
+              onClick={() => handleIconClick(icon)}
               style={{ width: iconWidth, height: iconHeight }}
             >
-              <Icon size={iconWidth * 0.8} />
+              <div
+                dangerouslySetInnerHTML={{ __html: icon.svg }}
+                style={{ width: iconWidth, height: iconHeight }}
+              />
             </div>
           ))}
         </div>
@@ -91,10 +66,12 @@ const IconPicker = ({
             className="px-4 py-2 bg-gray-200 rounded"
             onClick={() =>
               setCurrentPage((prev) =>
-                (prev + 1) * iconsPerPage < icons.length ? prev + 1 : prev
+                (prev + 1) * iconsPerPage < iconComponents.length
+                  ? prev + 1
+                  : prev
               )
             }
-            disabled={(currentPage + 1) * iconsPerPage >= icons.length}
+            disabled={(currentPage + 1) * iconsPerPage >= iconComponents.length}
           >
             Next
           </button>

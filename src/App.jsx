@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import IconPicker from "./components/IconPicker";
+
 const App = () => {
   const [showPicker, setShowPicker] = useState(false);
-  const [SelectedIcon, setSelectedIcon] = useState(null);
+  const [selectedIcon, setSelectedIcon] = useState(null);
 
-  const handleIconSelect = (Icon) => {
-    setSelectedIcon(() => Icon);
+  const handleIconSelect = (icon) => {
+    setSelectedIcon(icon);
     setShowPicker(false);
   };
 
@@ -15,18 +16,23 @@ const App = () => {
         className="w-24 h-24 border flex items-center justify-center cursor-pointer"
         onClick={() => setShowPicker(true)}
       >
-        {SelectedIcon ? <SelectedIcon size={64} /> : "Pick an icon"}
+        {selectedIcon ? (
+          <div
+            dangerouslySetInnerHTML={{ __html: selectedIcon.svg }}
+            style={{ width: "100%", height: "100%" }}
+          />
+        ) : (
+          "Pick an icon"
+        )}
       </div>
 
       {showPicker && (
         <IconPicker
           rowsInOnePage={3}
-          columnsInOnePage={4}
+          columnsInOnePage={3}
           iconHeight={100}
           iconWidth={100}
           onSelect={handleIconSelect}
-          pickerHeight={500}
-          pickerWidth={500}
         />
       )}
     </div>
