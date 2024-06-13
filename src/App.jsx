@@ -10,14 +10,19 @@ const App = () => {
     setShowPicker(false);
   };
 
+  const handleCancel = () => {
+    setShowPicker(false);
+  };
+
   return (
     <div className="flex items-center justify-center h-screen">
       <div
-        className="w-24 h-24 border flex items-center justify-center cursor-pointer"
+        className="w-24 h-24 border flex items-center justify-center cursor-pointer bg-blue-500 text-white"
         onClick={() => setShowPicker(true)}
       >
         {selectedIcon ? (
           <div
+            className="flex justify-center items-center"
             dangerouslySetInnerHTML={{ __html: selectedIcon.svg }}
             style={{ width: "100%", height: "100%" }}
           />
@@ -28,11 +33,12 @@ const App = () => {
 
       {showPicker && (
         <IconPicker
-          rowsInOnePage={3}
-          columnsInOnePage={3}
-          iconHeight={100}
-          iconWidth={100}
+          rowsInOnePage={5}
+          columnsInOnePage={5}
+          iconHeight={50}
+          iconWidth={50}
           onSelect={handleIconSelect}
+          onCancel={handleCancel}
         />
       )}
     </div>
